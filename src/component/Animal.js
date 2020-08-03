@@ -1,61 +1,16 @@
 import React, { Component } from 'react'
-import {animals} from '../data/animalData'
 
 
 
 class Animal extends Component{
-    constructor(){
-        super()
-        this.state = {
-            animals : [...animals],
-            like: [],
-            dislike: []
-        }
-    }
-    onDelete = (id) => {
-        const animals = this.state.animals.filter((animal)=> animal.objectId !==id)
-        const dislike = this.state.dislike.filter((animal)=> animal.objectId !==id)
-        const like = this.state.like.filter((animal)=> animal.objectId !==id)
-        this.setState({
-            animals,
-            like,
-            dislike
-        },()=>{console.log(this.state)})
-    }
 
-    onLike = (id) => {
-        if (this.state.like.filter((animal)=> animal.objectId === id).length){
-            return
-        }
-        const like = [...this.state.like]
-        const dislike = this.state.dislike.filter((animal)=> animal.objectId !==id)
-        like.push(this.state.animals.filter((animal)=> animal.objectId ===id)[0])
-        this.setState({
-            like,
-            dislike
-        },()=>{console.log(this.state)})
-    }
-
-    onDislike = (id) => {
-        if (this.state.dislike.filter((animal)=> animal.objectId ===id).length){
-            return
-        }
-        const like = this.state.like.filter((animal)=> animal.objectId !==id)
-        const dislike = [...this.state.dislike]
-        dislike.push(this.state.animals.filter((animal)=> animal.objectId ===id)[0])
-        this.setState({
-            like,
-            dislike
-        },()=>{console.log(this.state)})
-    }
-   
     render(){
         
         return (
             <div>
                 <h1>Animal Lovers</h1>
-                    <div className='ui cards' style={{marginLeft:'100px'}}>
-             {this.state.animals.map((animal,idx) => {
+                    <div className='ui cards main' style={{marginLeft:'100px'}}>
+             {this.props.data.animals.map((animal,idx) => {
                  const {objectId,img,name,type,description} = animal
                   return (
                 <div className="ui card" key={objectId}>
@@ -73,13 +28,13 @@ class Animal extends Component{
                     </div>
                     <div className="extra content">
                       <button className='ui primary button' onClick={() => {
-                            this.onLike(objectId)
+                            this.props.data.like(objectId)
                         }} >Like</button>
                       <button className='ui button red' onClick={() => {
-                            this.onDislike(objectId)
+                            this.props.data.dislike(objectId)
                         }}>Dislike</button>
                       <button className='ui button grey' onClick={() => {
-                            this.onDelete(objectId)
+                            this.props.data.delete(objectId)
                         }} >Discard</button>
                     </div>
                 </div>

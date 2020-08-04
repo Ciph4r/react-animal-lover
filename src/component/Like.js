@@ -13,7 +13,9 @@ class Like extends Component{
                     return (
                         
                         
-    <div className="like" style={{display:'flex', flexDirection:'row'}} key={objectId}>
+    <div className="like" style={{display:'flex', flexDirection:'row'}} key={objectId} onClick={() => {
+        this.props.data.unLike(objectId)
+    }}>
       <div className="image">
         <img alt ='...' src={img} style={{height:'100px',width:'200px'}}/>
       </div>
@@ -31,7 +33,7 @@ class Like extends Component{
         }else {
             return (
                 <div>
-                   <h1 style={{textAlign:'center',marginTop:'40px'}}>Likes</h1> 
+                   <h1 style={{textAlign:'center',marginTop:'40px'}}>No Likes</h1> 
                 </div>
             )
         }

@@ -13,7 +13,9 @@ export default class Dislike extends Component{
                     return (
                         
                         
-    <div className="like" style={{display:'flex', flexDirection:'row'}} key={objectId}>
+    <div className="like" style={{display:'flex', flexDirection:'row'}} key={objectId} onClick={() => {
+        this.props.data.undislike(objectId)
+    }}>
       <div className="image">
         <img alt ='...' src={img} style={{height:'100px',width:'200px'}}/>
       </div>
@@ -31,7 +33,7 @@ export default class Dislike extends Component{
         }else {
             return (
                 <div>
-                   <h1 style={{textAlign:'center',marginTop:'40px'}}>Dislikes</h1> 
+                   <h1 style={{textAlign:'center',marginTop:'40px'}}>No Dislikes</h1> 
                 </div>
             )
         }

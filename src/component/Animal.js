@@ -1,16 +1,20 @@
 import React, { Component } from 'react'
 
-
+const SearchIt = (word) => {
+    return function(item){
+      return item.type.toLowerCase().includes(word.toLowerCase())
+    }
+  }
 
 class Animal extends Component{
-
+    
     render(){
-        
+     
         return (
             <div>
                 <h1>Animal Lovers</h1>
                     <div className='ui cards main' style={{marginLeft:'100px'}}>
-             {this.props.data.animals.map((animal,idx) => {
+             {this.props.data.animals.filter(SearchIt(this.props.data.searchWord)).map((animal,idx) => {
                  const {objectId,img,name,type,description} = animal
                   return (
                 <div className="ui card" key={objectId}>

@@ -5,13 +5,15 @@ import Dislike from './Dislike'
 import {animals} from '../data/animalData'
 import './App.css'
 
+
 export default class App extends Component{
     constructor(){
         super()
         this.state = {
             animals : [...animals],
             like: [],
-            dislike: []
+            dislike: [],
+            searchWord :''
         }
     }
     onDelete = (id) => {
@@ -22,7 +24,7 @@ export default class App extends Component{
             animals,
             like,
             dislike
-        },()=>{console.log(this.state)})
+        })
     }
 
     onLike = (id) => {
@@ -35,7 +37,7 @@ export default class App extends Component{
         this.setState({
             like,
             dislike
-        },()=>{console.log(this.state)})
+        })
     }
 
     onDislike = (id) => {
@@ -48,15 +50,45 @@ export default class App extends Component{
         this.setState({
             like,
             dislike
-        },()=>{console.log(this.state)})
+        })
     }
+    unLike = (id) => {
+        const unlike = this.state.like.filter((animal)=> animal.objectId !==id)
+        this.setState({
+            like:unlike
+        })
+    }
+    undislike = (id) => {
+        const undislike = this.state.dislike.filter((animal)=> animal.objectId !==id)
+        this.setState({
+            dislike:undislike
+        })
+    }
+
+    search = (event) => {
+        this.setState({
+          searchWord : event.target.value
+        }
+        )
+      }
+
     render(){
         return (
             <div className='body'>
-                <Animal data = {{animals:this.state.animals, delete: this.onDelete, like: this.onLike , dislike: this.onDislike }}  />
+                <Animal data = {{animals:this.state.animals, searchWord: this.state.searchWord, delete: this.onDelete, like: this.onLike , dislike: this.onDislike }}  />
                 <div>
-                <Like data = {{likes: this.state.like}} />
-                <Dislike data = {{dislikes: this.state.dislike}} />
+
+                    <div className="ui search">
+                        <div className="ui icon input">
+                            <input className="prompt" style={{width:'400px'}} type='text' placeholder='Search By Type...' value={this.state.searchWord} onChange={this.search} />
+                            <i className="search icon"></i>
+                        </div>
+                         <div className="results"></div>
+                    </div>
+
+      
+                <Like data = {{likes: this.state.like, unLike:this.unLike}} />
+                <Dislike data = {{dislikes: this.state.dislike , undislike:this.undislike}} />
                 </div>
             </div>
         )
